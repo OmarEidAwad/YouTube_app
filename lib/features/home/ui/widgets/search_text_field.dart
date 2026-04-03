@@ -8,10 +8,12 @@ class SearchTextField extends StatelessWidget {
     super.key,
     required this.searchController,
     required this.onClearTap,
+    required this.onSubmitted,
   });
 
   final TextEditingController searchController;
   final void Function()? onClearTap;
+  final Function(String)? onSubmitted;
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +24,7 @@ class SearchTextField extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 14.0),
           child: CupertinoTextField(
+            onSubmitted: onSubmitted ,
             controller: searchController,
             prefix: Padding(
               padding: const EdgeInsets.only(left: 8.0),

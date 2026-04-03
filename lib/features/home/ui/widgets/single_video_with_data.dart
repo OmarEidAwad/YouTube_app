@@ -1,28 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:video_player/video_player.dart';
 import 'package:youtube_app/core/helpers/spacing.dart';
 import 'package:youtube_app/core/routing/app_router.dart';
+import 'package:youtube_app/features/home/data/models/search_response_model.dart';
+import 'package:youtube_app/features/video_details/data/models/all_videos_model.dart';
 
 class SingleVideoWithData extends StatefulWidget {
-  const SingleVideoWithData({
-    super.key,
-    required this.Videocontroller,
-    required this.ChannelPhoto,
-    required this.videoTitle,
-    required this.channelName,
-    required this.viewCount,
-    required this.uploadDate,
-    this.isSelectedVideo = false,
-  });
-  final VideoPlayerController Videocontroller;
-  final String ChannelPhoto;
-  final String videoTitle;
-  final String channelName;
-  final String viewCount;
-  final String uploadDate;
-  final bool isSelectedVideo;
+  const SingleVideoWithData({super.key, required this.allAndSelelctedVideoModel});
+
+  final AllAndSelelctedVideoModel allAndSelelctedVideoModel;
 
   @override
   State<SingleVideoWithData> createState() => _SingleVideoWithDataState();
@@ -30,27 +17,30 @@ class SingleVideoWithData extends StatefulWidget {
 
 class _SingleVideoWithDataState extends State<SingleVideoWithData> {
   @override
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         verticalSpace(10),
-        GestureDetector(onTap: () {
-          context.pushNamed(AppRoute.videoDetails );
-        },
+        GestureDetector(
+          onTap: () {
+            context.pushNamed(AppRoute.videoDetails, extra: widget.allAndSelelctedVideoModel);
+          },
           child: Container(
-            height: 200.h,
+            height: 218.h,
             width: double.infinity,
             child: Stack(
               children: [
-                VideoPlayer(widget.Videocontroller),
+                Image.network(widget.allAndSelelctedVideoModel.selectedVideo.thumbnails![1].url??""),
                 Positioned(
-                  left: 333.w,
+                  left: 330.w,
                   top: 175.h,
                   child: Container(
                     color: Colors.black.withOpacity(0.7),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 2.0),
-                      child: Text("11;11"),
+                      child: Text(widget.allAndSelelctedVideoModel.selectedVideo.lengthText??"",
+                          style: TextStyle(color: Colors.white, fontSize: 12.sp)),
                     ),
                   ),
                 ),
@@ -62,10 +52,11 @@ class _SingleVideoWithDataState extends State<SingleVideoWithData> {
         Row(
           children: [
             horizontalSpace(8),
-          widget.isSelectedVideo == true ? SizedBox() : CircleAvatar(
+
+            CircleAvatar(
               radius: 18.r,
-              backgroundImage: const NetworkImage(
-                'https://avatars.githubusercontent.com/u/122402644?v=4',
+              backgroundImage: NetworkImage(
+                '${widget.allAndSelelctedVideoModel.selectedVideo.channel!.avatar![0].url ?? ""}',
               ),
             ),
             horizontalSpace(8),
@@ -73,21 +64,27 @@ class _SingleVideoWithDataState extends State<SingleVideoWithData> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  textAlign: TextAlign.start,
-                  "${widget.videoTitle}",
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.bold,
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.85,
+                  child: Text(
+                    textAlign: TextAlign.start,
+                    "${widget.allAndSelelctedVideoModel.selectedVideo.title ?? ""}",
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-                Text(
-                  "${widget.channelName}            ${widget.viewCount}            ${widget.uploadDate}",
-                  maxLines: 2,
-                  style: TextStyle(fontSize: 12.sp, color: Colors.grey),
-                  overflow: TextOverflow.ellipsis,
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.85,
+                  child: Text(
+                    "${widget.allAndSelelctedVideoModel.selectedVideo.channel!.name ?? ""}    ${widget.allAndSelelctedVideoModel.selectedVideo.viewCountText ?? ""}   ${widget.allAndSelelctedVideoModel.selectedVideo.publishedTimeText ?? ""}",
+                    maxLines: 1,
+                    style: TextStyle(fontSize: 12.sp, color: Colors.grey),
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
               ],
             ),
