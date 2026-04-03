@@ -128,7 +128,7 @@ class _VideoDetailesScreenBodyState extends State<VideoDetailesScreenBody> {
                         child: SingleVideoWithData(
                           allAndSelelctedVideoModel: AllAndSelelctedVideoModel(
                             allVideos: widget.allAndSelelctedVideoModel.allVideos,
-                            selectedVideo: widget.allAndSelelctedVideoModel.allVideos[index],
+                            selectedVideo: widget.allAndSelelctedVideoModel.allVideos[widget.allAndSelelctedVideoModel.selectedVideo.id==OurVideo.id? index+1 : index],
                           ),
                         ),
                       );
