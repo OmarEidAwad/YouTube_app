@@ -15,9 +15,11 @@ class youtubeApp extends StatelessWidget {
       child: MaterialApp.router(
         routerConfig: AppRoute.router,
         theme: ThemeData(
-       
-          scaffoldBackgroundColor: Colors.white,
-        ),
+          brightness: Brightness.dark,
+                  scaffoldBackgroundColor: const Color.fromARGB(31, 30, 30, 30),
+
+        )
+        ,
         debugShowCheckedModeBanner: false,
       ),
     );

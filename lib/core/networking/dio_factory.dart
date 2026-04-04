@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:youtube_app/core/helpers/constants.dart';
+
 class DioFactory {
   /// private constructor as I don't want to allow creating an instance of this class
   DioFactory._();
@@ -13,7 +15,13 @@ class DioFactory {
       dio = Dio();
       dio!
         ..options.connectTimeout = timeOut
-        ..options.receiveTimeout = timeOut;
+        ..options.receiveTimeout = timeOut
+        ..options.headers = {
+          "x-rapidapi-key":
+              Constants.baseUrl,
+          "x-rapidapi-host": "youtube-media-downloader.p.rapidapi.com",
+          "Content-Type": "application/json",
+        };
       addDioInterceptor();
       return dio!;
     } else {
@@ -21,11 +29,8 @@ class DioFactory {
     }
   }
 
-
   static void setTokenIntoHeaderAfterLogin(String token) {
-    dio?.options.headers = {
-      'Authorization': 'Bearer $token',
-    };
+    dio?.options.headers = {'Authorization': 'Bearer $token'};
   }
 
   static void addDioInterceptor() {
