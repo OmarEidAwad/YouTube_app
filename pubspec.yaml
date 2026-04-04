@@ -28,6 +28,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  chewie: ^1.13.0
   cupertino_icons: ^1.0.8
   dio: ^5.9.2
   easy_localization: ^3.0.8
@@ -46,6 +47,7 @@ dependencies:
   pretty_dio_logger: ^1.4.0
   retrofit: ^4.0.1
   shared_preferences: ^2.5.4
+  video_player: ^2.11.1
 
 dev_dependencies:
   build_runner: ^2.4.8
@@ -76,8 +78,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  assets:
+    - assets/images/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -105,3 +107,11 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+flutter_native_splash:
+  color: "#ffffff"
+  image: assets/images/icon.png
+  android: true
+
+flutter_launcher_icons:
+  android: true
+  image_path: "assets/images/icon.png"

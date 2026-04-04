@@ -6,8 +6,16 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: HomeScreenBody(),
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(0),
+          child: AppBar(elevation: 0, scrolledUnderElevation: 0),
+        ),
+        extendBodyBehindAppBar: true,
+        body: SafeArea(child: HomeScreenBody()),
+      ),
     );
   }
 }
