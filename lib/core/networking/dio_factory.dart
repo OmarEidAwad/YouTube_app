@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:youtube_app/core/helpers/constants.dart';
 
 class DioFactory {
   /// private constructor as I don't want to allow creating an instance of this class
@@ -17,7 +18,7 @@ class DioFactory {
         ..options.receiveTimeout = timeOut
         ..options.headers = {
           "x-rapidapi-key":
-              "46a0ccf107msh788a40d60c5d2bcp16aac8jsn5544d124019e",
+              Constants.baseUrl,
           "x-rapidapi-host": "youtube-media-downloader.p.rapidapi.com",
           "Content-Type": "application/json",
         };
