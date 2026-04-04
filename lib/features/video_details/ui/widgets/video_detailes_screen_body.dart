@@ -41,101 +41,107 @@ class _VideoDetailesScreenBodyState extends State<VideoDetailesScreenBody> {
           ),
           error: (message) => Text('Error: $message'),
           success: (data) {
+
             final OurVideo = data;
-            return Column(
-              children: [
-                SelectedVideoDetails(ourVideo: OurVideo),
-                verticalSpace(6),
-                Container(
-                  height: 28.h,
-                  child: Expanded(
-                    child: ListView(
-                      controller: scrollController,
-                      scrollDirection: Axis.horizontal,
-                      physics: const BouncingScrollPhysics(),
-                      children: [
-                        horizontalSpace(8),
-                        CircleAvatar(
-                          radius: 14,
-                          backgroundImage: NetworkImage(
-                            OurVideo.channel!.avatar![0].url??"",
+            final filteredVideos = widget.allAndSelelctedVideoModel.allVideos
+    .where((video) => video.id != OurVideo.id)
+    .toList();
+            return Flexible(
+              child: Column(
+                children: [
+                  SelectedVideoDetails(ourVideo: OurVideo),
+                  verticalSpace(6),
+                  Container(
+                    height: 28.h,
+                    child: Expanded(
+                      child: ListView(
+                        controller: scrollController,
+                        scrollDirection: Axis.horizontal,
+                        physics: const BouncingScrollPhysics(),
+                        children: [
+                          horizontalSpace(8),
+                          CircleAvatar(
+                            radius: 14,
+                            backgroundImage: NetworkImage(
+                              OurVideo.channel!.avatar![0].url??"",
+                            ),
                           ),
-                        ),
-                        horizontalSpace(12),
-                        customVideoDetailsContainer(
-                          theWidgetInside: [
-                            Icon(Icons.notifications_off_outlined, size: 20),
-                            horizontalSpace(6),
-                            Icon(Icons.keyboard_arrow_down, size: 18),
-                          ],
-                        ),
-                        horizontalSpace(12),
-                        customVideoDetailsContainer(
-                          theWidgetInside: [
-                            horizontalSpace(6),
-                            Icon(Icons.thumb_up_alt_outlined, size: 18),
-                            horizontalSpace(8),
-                            Text(
-                              "${OurVideo.likeCount}",
-                              style: TextStyle(fontSize: 14.sp),
-                            ),
-                            horizontalSpace(8),
-                            Container(
-                              height: 12.sp,
-                              width: 2.sp,
-                              color: const Color.fromARGB(255, 107, 106, 106),
-                            ),
-                            horizontalSpace(8),
-                            Icon(Icons.thumb_down_alt_outlined, size: 18),
-                          ],
-                        ),
-                        horizontalSpace(12),
-                        customVideoDetailsContainer(
-                          theWidgetInside: [
-                            Icon(Icons.ios_share_outlined, size: 20),
-                          ],
-                        ),
-                        horizontalSpace(12),
-                        customVideoDetailsContainer(
-                          theWidgetInside: [Icon(Icons.star, size: 20)],
-                        ),
-                        horizontalSpace(12),
-                        customVideoDetailsContainer(
-                          theWidgetInside: [
-                            Icon(Icons.bookmark_outline, size: 20),
-                            horizontalSpace(6),
-                            Text("Save", style: TextStyle(fontSize: 14.sp)),
-                          ],
-                        ),
-                      ],
+                          horizontalSpace(12),
+                          customVideoDetailsContainer(
+                            theWidgetInside: [
+                              Icon(Icons.notifications_off_outlined, size: 20),
+                              horizontalSpace(6),
+                              Icon(Icons.keyboard_arrow_down, size: 18),
+                            ],
+                          ),
+                          horizontalSpace(12),
+                          customVideoDetailsContainer(
+                            theWidgetInside: [
+                              horizontalSpace(6),
+                              Icon(Icons.thumb_up_alt_outlined, size: 18),
+                              horizontalSpace(8),
+                              Text(
+                                "${OurVideo.likeCount}",
+                                style: TextStyle(fontSize: 14.sp),
+                              ),
+                              horizontalSpace(8),
+                              Container(
+                                height: 12.sp,
+                                width: 2.sp,
+                                color: const Color.fromARGB(255, 107, 106, 106),
+                              ),
+                              horizontalSpace(8),
+                              Icon(Icons.thumb_down_alt_outlined, size: 18),
+                            ],
+                          ),
+                          horizontalSpace(12),
+                          customVideoDetailsContainer(
+                            theWidgetInside: [
+                              Icon(Icons.ios_share_outlined, size: 20),
+                            ],
+                          ),
+                          horizontalSpace(12),
+                          customVideoDetailsContainer(
+                            theWidgetInside: [Icon(Icons.star, size: 20)],
+                          ),
+                          horizontalSpace(12),
+                          customVideoDetailsContainer(
+                            theWidgetInside: [
+                              Icon(Icons.bookmark_outline, size: 20),
+                              horizontalSpace(6),
+                              Text("Save", style: TextStyle(fontSize: 14.sp)),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                verticalSpace(12),
-                CommentsContainer(CommentCount: OurVideo.commentCountText??"0",
-                  ChannelPhoto: OurVideo.channel!.avatar![0].url??"",
-                ),
-                verticalSpace(2),
-
-                Expanded(
-                  child: ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    physics: const BouncingScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: widget.allAndSelelctedVideoModel.allVideos.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Container(
-                        child: SingleVideoWithData(
-                          allAndSelelctedVideoModel: AllAndSelelctedVideoModel(
-                            allVideos: widget.allAndSelelctedVideoModel.allVideos,
-                            selectedVideo: widget.allAndSelelctedVideoModel.allVideos[widget.allAndSelelctedVideoModel.selectedVideo.id==OurVideo.id? index+1 : index],
-                          ),
-                        ),
-                      );
-                    },
+                  verticalSpace(12),
+                  CommentsContainer(CommentCount: OurVideo.commentCountText??"0",
+                    ChannelPhoto: OurVideo.channel!.avatar![0].url??"",
                   ),
-                ),
-              ],
+                  verticalSpace(2),
+              
+                  Expanded(
+                    child: ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      physics: const BouncingScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: filteredVideos.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Container(
+                          child: SingleVideoWithData(
+                            allAndSelelctedVideoModel: AllAndSelelctedVideoModel(
+                              allVideos: filteredVideos,
+                              selectedVideo:   filteredVideos[index],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
             );
           },
           orElse: () {

@@ -16,7 +16,7 @@ class customVideoDetailsContainer extends StatelessWidget {
 
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: Row(
+        child: Row(mainAxisSize: MainAxisSize.min,
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),

@@ -7,7 +7,10 @@ import 'package:youtube_app/features/home/data/models/search_response_model.dart
 import 'package:youtube_app/features/video_details/data/models/all_videos_model.dart';
 
 class SingleVideoWithData extends StatefulWidget {
-  const SingleVideoWithData({super.key, required this.allAndSelelctedVideoModel});
+  const SingleVideoWithData({
+    super.key,
+    required this.allAndSelelctedVideoModel,
+  });
 
   final AllAndSelelctedVideoModel allAndSelelctedVideoModel;
 
@@ -24,23 +27,39 @@ class _SingleVideoWithDataState extends State<SingleVideoWithData> {
         verticalSpace(10),
         GestureDetector(
           onTap: () {
-            context.pushNamed(AppRoute.videoDetails, extra: widget.allAndSelelctedVideoModel);
+            context.pushNamed(
+              AppRoute.videoDetails,
+              extra: widget.allAndSelelctedVideoModel,
+            );
           },
           child: Container(
-            height: 218.h,
+            height: MediaQuery.of(context).size.height * 0.26,
             width: double.infinity,
             child: Stack(
               children: [
-                Image.network(widget.allAndSelelctedVideoModel.selectedVideo.thumbnails![1].url??""),
+                Image.network(
+                  widget
+                          .allAndSelelctedVideoModel
+                          .selectedVideo
+                          .thumbnails![1]
+                          .url ??
+                      "",
+                ),
                 Positioned(
-                  left: 330.w,
-                  top: 175.h,
+                  left: 365,
+                  top: 210,
                   child: Container(
                     color: Colors.black.withOpacity(0.7),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 2.0),
-                      child: Text(widget.allAndSelelctedVideoModel.selectedVideo.lengthText??"",
-                          style: TextStyle(color: Colors.white, fontSize: 12.sp)),
+                      child: Text(
+                        widget
+                                .allAndSelelctedVideoModel
+                                .selectedVideo
+                                .lengthText ??
+                            "",
+                        style: TextStyle(color: Colors.white, fontSize: 12.sp),
+                      ),
                     ),
                   ),
                 ),
@@ -48,7 +67,7 @@ class _SingleVideoWithDataState extends State<SingleVideoWithData> {
             ),
           ),
         ),
-        verticalSpace(12),
+        verticalSpace(8),
         Row(
           children: [
             horizontalSpace(8),

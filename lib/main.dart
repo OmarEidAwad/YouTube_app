@@ -10,7 +10,7 @@ Future<void> main() async {
 
   await setupGetIt();
 
-  final searchCubit = SearchCubit(getIt<SearchRepo>())..searchVideos("related");
+  final searchCubit = SearchCubit(getIt<SearchRepo>())..searchVideos("flutter");
 
   runApp(
     BlocProvider<SearchCubit>.value(
