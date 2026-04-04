@@ -1,3 +1,4 @@
+import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -18,32 +19,45 @@ class SelectedVideoDetails extends StatefulWidget {
 
 class _SelectedVideoDetailsState extends State<SelectedVideoDetails> {
   late VideoPlayerController Videocontroller;
+  late ChewieController chewieController;
 
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   Videocontroller =
+  //       VideoPlayerController.networkUrl(
+  //           Uri.parse(widget.ourVideo.videos!.items![0].url!),
+  //         )
+  //         ..initialize().then((_) {
+  //           setState(() {
+  //             Videocontroller.play();
+  //           });
+  //         });chewieController = ChewieController(
+  //     videoPlayerController: Videocontroller,autoPlay: true,looping: false,
+  //   );
+  // }
   @override
   void initState() {
     super.initState();
-    Videocontroller =
-        VideoPlayerController.networkUrl(
-            Uri.parse(
-              widget.ourVideo.videos!.items![0].url!,
-              // "https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4",
-            ),
-          )
-          ..initialize().then((_) {
-            setState(() {
-              Videocontroller.play();
-            });
-          })
-          ..setLooping(false);
+
+    Videocontroller = VideoPlayerController.networkUrl(
+      Uri.parse(widget.ourVideo.videos!.items![0].url!),
+    );
+
+    chewieController = ChewieController(
+      videoPlayerController: Videocontroller,
+      autoPlay: true,
+      looping: false,
+      allowFullScreen: true,
+    );
   }
 
   @override
   void dispose() {
-    Videocontroller.dispose().then((_) {
-      Videocontroller.pause();
-    })
-    
-    ;
+    Videocontroller.pause();
+    Videocontroller.dispose();
+    chewieController.dispose();
+
     super.dispose();
   }
 
@@ -57,7 +71,8 @@ class _SelectedVideoDetailsState extends State<SelectedVideoDetails> {
           width: double.infinity,
           child: Stack(
             children: [
-              VideoPlayer(Videocontroller),
+              Chewie(controller: chewieController),
+              // VideoPlayer(Videocontroller),
               Positioned(
                 left: 333.w,
                 top: 175.h,
