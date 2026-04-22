@@ -84,7 +84,7 @@ class _SelectedVideoDetailsState extends State<SelectedVideoDetails> {
                   Container(
                     width: MediaQuery.of(context).size.width * 0.95,
                     child: Text(
-                      "@${widget.ourVideo.channel!.name}     ${widget.ourVideo.viewCount} views           ${widget.ourVideo.publishedTimeText ?? ""}",
+                      "       @${widget.ourVideo.channel!.name}     ${widget.ourVideo.viewCount} views           ${widget.ourVideo.publishedTimeText ?? ""}",
                       maxLines: 1,
                       style: TextStyle(fontSize: 12.sp, color: Colors.grey),
                       overflow: TextOverflow.ellipsis,

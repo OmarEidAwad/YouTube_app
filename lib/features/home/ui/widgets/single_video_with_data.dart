@@ -3,7 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:youtube_app/core/helpers/spacing.dart';
 import 'package:youtube_app/core/routing/app_router.dart';
+import 'package:youtube_app/features/channel/ui/channel_screen.dart';
 import 'package:youtube_app/features/home/data/models/search_response_model.dart';
+import 'package:youtube_app/features/home/data/models/videos_and_channel_id.dart';
 import 'package:youtube_app/features/video_details/data/models/all_videos_model.dart';
 
 class SingleVideoWithData extends StatefulWidget {
@@ -72,10 +74,15 @@ class _SingleVideoWithDataState extends State<SingleVideoWithData> {
           children: [
             horizontalSpace(8),
 
-            CircleAvatar(
-              radius: 18.r,
-              backgroundImage: NetworkImage(
-                '${widget.allAndSelelctedVideoModel.selectedVideo.channel!.avatar![0].url ?? ""}',
+            GestureDetector(
+              onTap: () {
+             context.pushNamed(AppRoute.channelscreen, extra: VideosAndChannelId(allVideos: widget.allAndSelelctedVideoModel.allVideos, selectedVideo: widget.allAndSelelctedVideoModel.selectedVideo, channelId: widget.allAndSelelctedVideoModel.selectedVideo.channel!.id!));
+              },
+              child: CircleAvatar(
+                radius: 18.r,
+                backgroundImage: NetworkImage(
+                  '${widget.allAndSelelctedVideoModel.selectedVideo.channel!.avatar![0].url ?? ""}',
+                ),
               ),
             ),
             horizontalSpace(8),

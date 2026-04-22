@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:youtube_app/core/networking/dio_factory.dart';
 import 'package:youtube_app/core/networking/search_api_service.dart';
+import 'package:youtube_app/features/channel/data/repo/channel_repo.dart';
 import 'package:youtube_app/features/home/data/repo/search_repo.dart';
 import 'package:youtube_app/features/video_details/data/repo/video_repo.dart';
 
@@ -19,7 +20,7 @@ Dio dio = DioFactory.getDio();
   
   getIt.registerLazySingleton<SearchRepo>(() => SearchRepo());
     getIt.registerLazySingleton<VideoRepo>(() => VideoRepo());
-
+ getIt.registerLazySingleton<ChannelRepo>(() => ChannelRepo());
 
 
 } 

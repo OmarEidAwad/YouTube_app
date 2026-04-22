@@ -2,9 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:video_player/video_player.dart';
 import 'package:youtube_app/core/helpers/spacing.dart';
+import 'package:youtube_app/core/routing/app_router.dart';
 import 'package:youtube_app/features/home/data/models/search_response_model.dart';
+import 'package:youtube_app/features/home/data/models/videos_and_channel_id.dart';
 import 'package:youtube_app/features/home/ui/widgets/single_video_with_data.dart';
 import 'package:youtube_app/features/video_details/data/models/all_videos_model.dart';
 import 'package:youtube_app/features/video_details/logic/cubit/video_detailes_cubit.dart';
@@ -60,10 +63,15 @@ class _VideoDetailesScreenBodyState extends State<VideoDetailesScreenBody> {
                         physics: const BouncingScrollPhysics(),
                         children: [
                           horizontalSpace(8),
-                          CircleAvatar(
-                            radius: 14,
-                            backgroundImage: NetworkImage(
-                              OurVideo.channel!.avatar![0].url??"",
+                          GestureDetector(
+                            onTap: () {
+             context.pushNamed(AppRoute.channelscreen, extra: VideosAndChannelId(allVideos: widget.allAndSelelctedVideoModel.allVideos, selectedVideo: widget.allAndSelelctedVideoModel.selectedVideo, channelId: widget.allAndSelelctedVideoModel.selectedVideo.channel!.id!));
+                            },
+                            child: CircleAvatar(
+                              radius: 14,
+                              backgroundImage: NetworkImage(
+                                OurVideo.channel!.avatar![0].url??"",
+                              ),
                             ),
                           ),
                           horizontalSpace(12),
